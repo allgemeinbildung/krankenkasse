@@ -328,83 +328,190 @@
                 data: {
                     labels: ['Franchise 300 CHF', 'Franchise 1000 CHF', 'Franchise 2500 CHF', 'Total Jahr 1', 'Total Jahr 2', 'Total Jahr 3', 'Total 3 Jahre'],
                     datasets: [
+                        // Franchise 300 CHF
                         {
                             label: 'Jahr 1 - Prämie',
-                            data: [costs300[0].premium, costs1000[0].premium, costs2500[0].premium, 0, 0, 0, 0],
+                            data: [costs300[0].premium, null, null, null, null, null],
                             backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            stack: 'Jahr 1'
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 1 - Franchise',
-                            data: [costs300[0].paidFranchise, costs1000[0].paidFranchise, costs2500[0].paidFranchise, 0, 0, 0, 0],
+                            data: [costs300[0].paidFranchise, null, null, null, null, null],
                             backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            stack: 'Jahr 1'
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 1 - Selbstbehalt',
-                            data: [costs300[0].selfPayment, costs1000[0].selfPayment, costs2500[0].selfPayment, 0, 0, 0, 0],
+                            data: [costs300[0].selfPayment, null, null, null, null, null],
                             backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                            stack: 'Jahr 1'
-                        },
-                        {
-                            label: 'Total Jahr 1',
-                            data: [0, 0, 0, totalYear1, 0, 0, 0],
-                            backgroundColor: 'rgba(128, 0, 0, 0.5)',
-                            stack: 'Total Jahr'
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 2 - Prämie',
-                            data: [costs300[1].premium, costs1000[1].premium, costs2500[1].premium, 0, 0, 0, 0],
+                            data: [costs300[1].premium, null, null, null, null, null],
                             backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                            stack: 'Jahr 2'
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 2 - Franchise',
-                            data: [costs300[1].paidFranchise, costs1000[1].paidFranchise, costs2500[1].paidFranchise, 0, 0, 0, 0],
+                            data: [costs300[1].paidFranchise, null, null, null, null, null],
                             backgroundColor: 'rgba(255, 205, 86, 0.5)',
-                            stack: 'Jahr 2'
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 2 - Selbstbehalt',
-                            data: [costs300[1].selfPayment, costs1000[1].selfPayment, costs2500[1].selfPayment, 0, 0, 0, 0],
+                            data: [costs300[1].selfPayment, null, null, null, null, null],
                             backgroundColor: 'rgba(201, 203, 207, 0.5)',
-                            stack: 'Jahr 2'
-                        },
-                        {
-                            label: 'Total Jahr 2',
-                            data: [0, 0, 0, 0, totalYear2, 0, 0],
-                            backgroundColor: 'rgba(0, 128, 0, 0.5)',
-                            stack: 'Total Jahr'
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 3 - Prämie',
-                            data: [costs300[2].premium, costs1000[2].premium, costs2500[2].premium, 0, 0, 0, 0],
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            stack: 'Jahr 3'
+                            data: [costs300[2].premium, null, null, null, null, null],
+                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 3 - Franchise',
-                            data: [costs300[2].paidFranchise, costs1000[2].paidFranchise, costs2500[2].paidFranchise, 0, 0, 0, 0],
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            stack: 'Jahr 3'
+                            data: [costs300[2].paidFranchise, null, null, null, null, null],
+                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            stack: 'F300'
                         },
                         {
                             label: 'Jahr 3 - Selbstbehalt',
-                            data: [costs300[2].selfPayment, costs1000[2].selfPayment, costs2500[2].selfPayment, 0, 0, 0, 0],
-                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                            stack: 'Jahr 3'
-                        },                      
-                        {
-                            label: 'Total Jahr 3',
-                            data: [0, 0, 0, 0, 0, totalYear3, 0],
-                            backgroundColor: 'rgba(0, 0, 128, 0.5)',
-                            stack: 'Total Jahr'
+                            data: [costs300[2].selfPayment, null, null, null, null, null],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            stack: 'F300'
                         },
                         {
-                            label: 'Total 3 Jahre',
-                            data: [0, 0, 0, 0, 0, 0, totalSum300, totalSum1000, totalSum2500],
+                            label: 'Total 3 Jahre F300',
+                            data: [null, totalSum300, null, null, null, null],
                             backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                            stack: 'Total'
+                            stack: 'F300Total'
+                        },
+                    
+                        // Franchise 1000 CHF
+                        {
+                            label: 'Jahr 1 - Prämie',
+                            data: [null, null, costs1000[0].premium, null, null, null],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 1 - Franchise',
+                            data: [null, null, costs1000[0].paidFranchise, null, null, null],
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 1 - Selbstbehalt',
+                            data: [null, null, costs1000[0].selfPayment, null, null, null],
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 2 - Prämie',
+                            data: [null, null, costs1000[1].premium, null, null, null],
+                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 2 - Franchise',
+                            data: [null, null, costs1000[1].paidFranchise, null, null, null],
+                            backgroundColor: 'rgba(255, 205, 86, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 2 - Selbstbehalt',
+                            data: [null, null, costs1000[1].selfPayment, null, null, null],
+                            backgroundColor: 'rgba(201, 203, 207, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 3 - Prämie',
+                            data: [null, null, costs1000[2].premium, null, null, null],
+                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 3 - Franchise',
+                            data: [null, null, costs1000[2].paidFranchise, null, null, null],
+                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Jahr 3 - Selbstbehalt',
+                            data: [null, null, costs1000[2].selfPayment, null, null, null],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            stack: 'F1000'
+                        },
+                        {
+                            label: 'Total 3 Jahre F1000',
+                            data: [null, null, null, totalSum1000, null, null],
+                            backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                            stack: 'F1000Total'
+                        },
+                    
+                        // Franchise 2500 CHF
+                        {
+                            label: 'Jahr 1 - Prämie',
+                            data: [null, null, null, null, costs2500[0].premium, null],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 1 - Franchise',
+                            data: [null, null, null, null, costs2500[0].paidFranchise, null],
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 1 - Selbstbehalt',
+                            data: [null, null, null, null, costs2500[0].selfPayment, null],
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 2 - Prämie',
+                            data: [null, null, null, null, costs2500[1].premium, null],
+                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 2 - Franchise',
+                            data: [null, null, null, null, costs2500[1].paidFranchise, null],
+                            backgroundColor: 'rgba(255, 205, 86, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 2 - Selbstbehalt',
+                            data: [null, null, null, null, costs2500[1].selfPayment, null],
+                            backgroundColor: 'rgba(201, 203, 207, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 3 - Prämie',
+                            data: [null, null, null, null, costs2500[2].premium, null],
+                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 3 - Franchise',
+                            data: [null, null, null, null, costs2500[2].paidFranchise, null],
+                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Jahr 3 - Selbstbehalt',
+                            data: [null, null, null, null, costs2500[2].selfPayment, null],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            stack: 'F2500'
+                        },
+                        {
+                            label: 'Total 3 Jahre F2500',
+                            data: [null, null, null, null, null, totalSum2500],
+                            backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                            stack: 'F2500Total'
                         }
                     ]
                 },
