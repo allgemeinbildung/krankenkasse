@@ -280,30 +280,27 @@
             const healthCostsYear1 = parseFloat(document.getElementById('healthCostsYear1').value);
             const healthCostsYear2 = parseFloat(document.getElementById('healthCostsYear2').value);
             const healthCostsYear3 = parseFloat(document.getElementById('healthCostsYear3').value);
-
+        
             const costs300 = [
-                calculateCost(300, premium300, healthCostsYear1),
-                calculateCost(300, premium300 * 1.05, healthCostsYear2),
-                const costs300 = [
                 calculateCost(300, premium300, healthCostsYear1),
                 calculateCost(300, premium300 * 1.05, healthCostsYear2),
                 calculateCost(300, premium300 * 1.1025, healthCostsYear3)
             ];
-
+        
             const costs1000 = [
                 calculateCost(1000, premium1000, healthCostsYear1),
                 calculateCost(1000, premium1000 * 1.05, healthCostsYear2),
                 calculateCost(1000, premium1000 * 1.1025, healthCostsYear3)
             ];
-
+        
             const costs2500 = [
                 calculateCost(2500, premium2500, healthCostsYear1),
                 calculateCost(2500, premium2500 * 1.05, healthCostsYear2),
                 calculateCost(2500, premium2500 * 1.1025, healthCostsYear3)
             ];
-
+        
             updateThreeYearChart(costs300, costs1000, costs2500);
-
+        
             document.getElementById('results').style.display = 'block';
             document.getElementById('threeYearChart').style.display = 'block';
             document.getElementById('chart').style.display = 'none';
