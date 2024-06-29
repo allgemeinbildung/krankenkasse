@@ -159,7 +159,6 @@
                 <li>Jahresprämie: Die monatliche Prämie wird mit 12 multipliziert.</li>
                 <li>Franchise: Der volle Franchisebetrag wird bezahlt, wenn die Gesundheitskosten die Franchise übersteigen.</li>
                 <li>Selbstbehalt: 10% der Kosten über der Franchise, maximal 700 CHF.</li>
-                <li>Versicherungsleistung: 100% der Kosten über Franchise und Selbstbehalt.</li>
             </ol>
             <p>Die Gesamtkosten setzen sich aus Jahresprämie, bezahlter Franchise, Selbstbehalt und eventuellen zusätzlichen Gesundheitskosten zusammen.</p>
             <p>Bei der 3-Jahres-Berechnung werden die Prämien jedes Jahr um 5% erhöht, und die Gesundheitskosten können für jedes Jahr individuell festgelegt werden.</p>
@@ -240,12 +239,7 @@
                             label: 'Selbstbehalt',
                             data: [costs300.selfPayment, costs1000.selfPayment, costs2500.selfPayment],
                             backgroundColor: 'rgba(75, 192, 192, 0.5)'
-                        },
-                        {
-                            label: 'Versicherungsleistung',
-                            data: [costs300.insuranceCoverage, costs1000.insuranceCoverage, costs2500.insuranceCoverage],
-                            backgroundColor: 'rgba(153, 102, 255, 0.5)'
-                        }
+                        },                        
                     ]
                 },
                 options: {
