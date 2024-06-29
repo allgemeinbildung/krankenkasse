@@ -306,7 +306,7 @@
             ];
         
             updateThreeYearChart(costs300, costs1000, costs2500);
-        
+
             document.getElementById('results').style.display = 'block';
             document.getElementById('threeYearChart').style.display = 'block';
             document.getElementById('threeYearSummary').style.display = 'block';
@@ -320,12 +320,7 @@
             if (threeYearChart) {
                 threeYearChart.destroy();
             }
-        
-            // Calculate total sums for each franchise option
-            const totalSum300 = costs300.reduce((sum, year) => sum + year.totalCost, 0);
-            const totalSum1000 = costs1000.reduce((sum, year) => sum + year.totalCost, 0);
-            const totalSum2500 = costs2500.reduce((sum, year) => sum + year.totalCost, 0);
-        
+                
             threeYearChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -421,6 +416,11 @@
                 }
             });
         
+            // Calculate total sums for each franchise option
+            const totalSum300 = costs300.reduce((sum, year) => sum + year.totalCost, 0);
+            const totalSum1000 = costs1000.reduce((sum, year) => sum + year.totalCost, 0);
+            const totalSum2500 = costs2500.reduce((sum, year) => sum + year.totalCost, 0);
+        
             // Update the summary in the dedicated div
             const summaryElement = document.getElementById('threeYearSummary');
             summaryElement.innerHTML = `
@@ -429,7 +429,6 @@
                 <p>Franchise 1000 CHF: ${totalSum1000.toLocaleString('de-CH')} CHF</p>
                 <p>Franchise 2500 CHF: ${totalSum2500.toLocaleString('de-CH')} CHF</p>
             `;
-            document.getElementById('threeYearChart').appendChild(summaryElement);
         }
     </script>
 </body>
