@@ -19,19 +19,14 @@
         #chart {
             margin-top: 20px;
         }
-        .explanation {
+        .explanation, .instructions {
             margin-top: 20px;
             border: 1px solid #ccc;
             padding: 10px;
             background-color: #f9f9f9;
-        .instructions {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 20px;
-            margin-bottom: 20px;
             border-radius: 5px;
         }
-        .instructions h2 {
+        .instructions h2, .explanation h3 {
             color: #333;
             margin-top: 0;
         }
@@ -49,25 +44,27 @@
 <body>
     <h1>Schweizer Gesundheitskosten-Rechner</h1>
     
-    <p>Sie können die Höhe der Prämien von verschiedenen Krankenversicherungen Sie unter <a href="https://www.priminfo.admin.ch/de/praemien" target="_blank">Prämienrechner – Priminfo (admin.ch)</a> finden.</p>
+    <p>Sie können die Höhe der Prämien von verschiedenen Krankenversicherungen unter <a href="https://www.priminfo.admin.ch/de/praemien" target="_blank">Prämienrechner – Priminfo (admin.ch)</a> finden.</p>
+    
     <div class="instructions">
-    <h2>Anleitung</h2>
-    <ol>
-        <li>
-            <strong>Prämien eingeben:</strong>
-            <p>Tragen Sie die monatlichen Prämien für die drei Franchise-Optionen (300 CHF, 1000 CHF und 2500 CHF) in die entsprechenden Felder ein. Die aktuellen Prämien für Ihre Region finden Sie im verlinkten Prämienrechner des Bundes.</p>
-        </li>
-        <li>
-            <strong>Gesundheitskosten eintragen:</strong>
-            <p>Geben Sie im Feld "Jährliche Gesundheitskosten" den Betrag ein, den Sie für ein Jahr an Gesundheitskosten erwarten oder für den Sie eine Berechnung durchführen möchten.</p>
-        </li>
-        <li>
-            <strong>Berechnung starten:</strong>
-            <p>Klicken Sie auf den "Berechnen" Button, um die Analyse zu starten.</p>
-        </li>        
-    </ol>
-    <p><em>Bitte beachten Sie: Diese Berechnung dient als Orientierungshilfe und ersetzt keine individuelle Beratung. Die tatsächlichen Kosten können je nach spezifischer Situation und Versicherungsvertrag variieren.</em></p>
-</div>
+        <h2>Anleitung</h2>
+        <ol>
+            <li>
+                <strong>Prämien eingeben:</strong>
+                <p>Tragen Sie die monatlichen Prämien für die drei Franchise-Optionen (300 CHF, 1000 CHF und 2500 CHF) in die entsprechenden Felder ein. Die aktuellen Prämien für Ihre Region finden Sie im verlinkten Prämienrechner des Bundes.</p>
+            </li>
+            <li>
+                <strong>Gesundheitskosten eintragen:</strong>
+                <p>Geben Sie im Feld "Jährliche Gesundheitskosten" den Betrag ein, den Sie für ein Jahr an Gesundheitskosten erwarten oder für den Sie eine Berechnung durchführen möchten.</p>
+            </li>
+            <li>
+                <strong>Berechnung starten:</strong>
+                <p>Klicken Sie auf den "Berechnen" Button, um die Analyse zu starten.</p>
+            </li>        
+        </ol>
+        <p><em>Bitte beachten Sie: Diese Berechnung dient als Orientierungshilfe und ersetzt keine individuelle Beratung. Die tatsächlichen Kosten können je nach spezifischer Situation und Versicherungsvertrag variieren.</em></p>
+    </div>
+
     <h2>Monatliche Prämien</h2>
     <label for="premium300">Prämie für Franchise 300 CHF:</label>
     <input type="number" id="premium300" placeholder="Prämie in CHF"><br>
@@ -88,40 +85,42 @@
         <canvas id="costChart"></canvas>
     </div>
 
-    <div class="instructions">
-    <h2>Interpretation der Ergebnisse</h2>
-    <ol>
-        <li>
-            <strong>Ergebnisse interpretieren:</strong>
-            <p>Das Balkendiagramm zeigt Ihnen für jede Franchise-Option die Gesamtkosten, aufgeteilt in vier Kategorien:</p>
-            <ul>
-                <li>Prämien (rot): Die jährlichen Versicherungsprämien</li>
-                <li>Franchise (blau): Der von Ihnen zu zahlende Franchisebetrag</li>
-                <li>Selbstbehalt (grün): Ihr Kostenanteil von 10% bis maximal 700 CHF</li>
-                <li>Versicherungsleistung (lila): Kosten, die vollständig von der Versicherung übernommen werden</li>
-            </ul>
-        </li>
-        <li>
-            <strong>Vergleichen und analysieren:</strong>
-            <p>Vergleichen Sie die Gesamthöhe und Zusammensetzung der Balken, um zu sehen, welche Franchise-Option für Ihre eingegebenen Gesundheitskosten am günstigsten wäre.</p>
-        </li>
-        <li>
-            <strong>Verschiedene Szenarien testen:</strong>
-            <p>Probieren Sie verschiedene Werte für die jährlichen Gesundheitskosten aus, um zu sehen, wie sich die Gesamtkosten bei unterschiedlichen Gesundheitsausgaben verhalten.</p>
-        </li>
-    </ol>
-    <p><em>Bitte beachten Sie: Diese Berechnung dient als Orientierungshilfe und ersetzt keine individuelle Beratung. Die tatsächlichen Kosten können je nach spezifischer Situation und Versicherungsvertrag variieren.</em></p>
-</div>
-    <div class="explanation">
-        <h3>Erklärung der Kostenberechnung:</h3>
-        <p>Für jede Franchise werden die Kosten wie folgt berechnet:</p>
-        <ol>
-            <li>Jahresprämie: Die monatliche Prämie wird mit 12 multipliziert.</li>
-            <li>Franchise: Der volle Franchisebetrag wird bezahlt, wenn die Gesundheitskosten die Franchise übersteigen.</li>
-            <li>Selbstbehalt: 10% der Kosten über der Franchise, maximal 700 CHF.</li>
-            <li>Versicherungsleistung: 100% der Kosten über Franchise und Selbstbehalt.</li>
-        </ol>
-        <p>Die Gesamtkosten setzen sich aus Jahresprämie, bezahlter Franchise, Selbstbehalt und eventuellen zusätzlichen Gesundheitskosten zusammen.</p>
+    <div id="results" style="display: none;">
+        <div class="instructions">
+            <h2>Interpretation der Ergebnisse</h2>
+            <ol>
+                <li>
+                    <strong>Ergebnisse interpretieren:</strong>
+                    <p>Das Balkendiagramm zeigt Ihnen für jede Franchise-Option die Gesamtkosten, aufgeteilt in vier Kategorien:</p>
+                    <ul>
+                        <li>Prämien (rot): Die jährlichen Versicherungsprämien</li>
+                        <li>Franchise (blau): Der von Ihnen zu zahlende Franchisebetrag</li>
+                        <li>Selbstbehalt (grün): Ihr Kostenanteil von 10% bis maximal 700 CHF</li>
+                        <li>Versicherungsleistung (lila): Kosten, die vollständig von der Versicherung übernommen werden</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Vergleichen und analysieren:</strong>
+                    <p>Vergleichen Sie die Gesamthöhe und Zusammensetzung der Balken, um zu sehen, welche Franchise-Option für Ihre eingegebenen Gesundheitskosten am günstigsten wäre.</p>
+                </li>
+                <li>
+                    <strong>Verschiedene Szenarien testen:</strong>
+                    <p>Probieren Sie verschiedene Werte für die jährlichen Gesundheitskosten aus, um zu sehen, wie sich die Gesamtkosten bei unterschiedlichen Gesundheitsausgaben verhalten.</p>
+                </li>
+            </ol>
+        </div>
+
+        <div class="explanation">
+            <h3>Erklärung der Kostenberechnung:</h3>
+            <p>Für jede Franchise werden die Kosten wie folgt berechnet:</p>
+            <ol>
+                <li>Jahresprämie: Die monatliche Prämie wird mit 12 multipliziert.</li>
+                <li>Franchise: Der volle Franchisebetrag wird bezahlt, wenn die Gesundheitskosten die Franchise übersteigen.</li>
+                <li>Selbstbehalt: 10% der Kosten über der Franchise, maximal 700 CHF.</li>
+                <li>Versicherungsleistung: 100% der Kosten über Franchise und Selbstbehalt.</li>
+            </ol>
+            <p>Die Gesamtkosten setzen sich aus Jahresprämie, bezahlter Franchise, Selbstbehalt und eventuellen zusätzlichen Gesundheitskosten zusammen.</p>
+        </div>
     </div>
 
     <script>
@@ -138,6 +137,12 @@
             const cost2500 = calculateCost(2500, premium2500, healthCosts);
 
             updateChart(cost300, cost1000, cost2500);
+
+            // Show the results
+            document.getElementById('results').style.display = 'block';
+
+            // Scroll smoothly to the results area
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
 
         function calculateCost(franchise, premium, healthCosts) {
