@@ -18,6 +18,7 @@
         }
         #chart {
             margin-top: 20px;
+            height: 300px;
         }
         .explanation, .instructions {
             margin-top: 20px;
@@ -162,11 +163,11 @@
 
         function updateChart(cost300, cost1000, cost2500) {
             const ctx = document.getElementById('costChart').getContext('2d');
-
+        
             if (chart) {
                 chart.destroy();
             }
-
+        
             chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -203,6 +204,8 @@
                     ]
                 },
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             stacked: true,
@@ -210,6 +213,11 @@
                             title: {
                                 display: true,
                                 text: 'Kosten (CHF)'
+                            },
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return value.toLocaleString('de-CH') + ' CHF';
+                                }
                             }
                         },
                         x: {
@@ -222,7 +230,7 @@
                                 label: function(context) {
                                     const label = context.dataset.label || '';
                                     const value = context.parsed.y || 0;
-                                    return `${label}: ${value.toFixed(2)} CHF`;
+                                    return `${label}: ${value.toLocaleString('de-CH')} CHF`;
                                 }
                             }
                         }
