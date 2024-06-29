@@ -42,56 +42,16 @@
         }
         #threeYearInputs {
             display: none;
+        }
         .checkbox-container {
             margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Schweizer Gesundheitskosten-Rechner</h1>
-    
-    <p>Sie können die Höhe der Prämien von verschiedenen Krankenversicherungen unter <a href="https://www.priminfo.admin.ch/de/praemien" target="_blank">Prämienrechner – Priminfo (admin.ch)</a> finden.</p>
-    
-    <div class="instructions">
-        <h2>Anleitung</h2>
-        <ol>
-            <li>
-                <strong>Prämien eingeben:</strong>
-                <p>Tragen Sie die monatlichen Prämien für die drei Franchise-Optionen (300 CHF, 1000 CHF und 2500 CHF) in die entsprechenden Felder ein. Die aktuellen Prämien für Ihre Region finden Sie im verlinkten Prämienrechner des Bundes.</p>
-            </li>
-            <li>
-                <strong>Gesundheitskosten eintragen:</strong>
-                <p>Geben Sie im Feld "Jährliche Gesundheitskosten" den Betrag ein, den Sie für ein Jahr an Gesundheitskosten erwarten oder für den Sie eine Berechnung durchführen möchten.</p>
-            </li>
-            <li>
-                <strong>Berechnung starten:</strong>
-                <p>Klicken Sie auf den "Berechnen" Button, um die Analyse zu starten.</p>
-            </li>
-            <li>
-                <strong>3-Jahres-Berechnung (optional):</strong>
-                <p>Klicken Sie auf "3-Jahres-Berechnung aktivieren", um die Kosten über drei Jahre zu berechnen. Geben Sie die erwarteten Gesundheitskosten für jedes Jahr ein und klicken Sie auf "3-Jahres-Berechnung". Die Prämien werden pauschal 5% pro Jahr steigen.</p>
-            </li>
-        </ol>
-        <p><em>Bitte beachten Sie: Diese Berechnung dient als Orientierungshilfe und ersetzt keine individuelle Beratung. Die tatsächlichen Kosten können je nach spezifischer Situation und Versicherungsvertrag variieren.</em></p>
-    </div>
+    <!-- ... (keep the existing content up to the "Berechnen" button) ... -->
 
-    <h2>Monatliche Prämien</h2>
-    <label for="premium300">Prämie für Franchise 300 CHF:</label>
-    <input type="number" id="premium300" placeholder="Prämie in CHF"><br>
-    
-    <label for="premium1000">Prämie für Franchise 1000 CHF:</label>
-    <input type="number" id="premium1000" placeholder="Prämie in CHF"><br>
-    
-    <label for="premium2500">Prämie für Franchise 2500 CHF:</label>
-    <input type="number" id="premium2500" placeholder="Prämie in CHF"><br>
-    
-    <h2>Gesundheitskosten</h2>
-    <label for="healthCosts">Jährliche Gesundheitskosten:</label>
-    <input type="number" id="healthCosts" placeholder="Kosten in CHF">
-    
     <button onclick="calculate()">Berechnen</button>
-    
-    <button onclick="toggleThreeYearInputs()">3-Jahres-Berechnung aktivieren</button>
     
     <div class="checkbox-container">
         <input type="checkbox" id="threeYearCheckbox" onchange="toggleThreeYearInputs()">
@@ -120,48 +80,7 @@
         <canvas id="threeYearCostChart"></canvas>
     </div>
 
-    <div id="results" style="display: none;">
-        <div class="instructions">
-            <h2>Interpretation der Ergebnisse</h2>
-            <ol>
-                <li>
-                    <strong>Ergebnisse interpretieren:</strong>
-                    <p>Das Balkendiagramm zeigt Ihnen für jede Franchise-Option die Gesamtkosten, aufgeteilt in vier Kategorien:</p>
-                    <ul>
-                        <li>Prämien (rot): Die jährlichen Versicherungsprämien</li>
-                        <li>Franchise (blau): Der von Ihnen zu zahlende Franchisebetrag</li>
-                        <li>Selbstbehalt (grün): Ihr Kostenanteil von 10% bis maximal 700 CHF</li>
-                        <li>Versicherungsleistung (lila): Kosten, die vollständig von der Versicherung übernommen werden</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>Vergleichen und analysieren:</strong>
-                    <p>Vergleichen Sie die Gesamthöhe und Zusammensetzung der Balken, um zu sehen, welche Franchise-Option für Ihre eingegebenen Gesundheitskosten am günstigsten wäre.</p>
-                </li>
-                <li>
-                    <strong>Verschiedene Szenarien testen:</strong>
-                    <p>Probieren Sie verschiedene Werte für die jährlichen Gesundheitskosten aus, um zu sehen, wie sich die Gesamtkosten bei unterschiedlichen Gesundheitsausgaben verhalten.</p>
-                </li>
-                <li>
-                    <strong>3-Jahres-Berechnung analysieren:</strong>
-                    <p>Bei der 3-Jahres-Berechnung sehen Sie die Kosten für jedes Jahr gestapelt. Beachten Sie, dass die Prämien jährlich um 5% steigen. Vergleichen Sie die Gesamtkosten über drei Jahre, um eine langfristige Perspektive zu erhalten.</p>
-                </li>
-            </ol>
-        </div>
-
-        <div class="explanation">
-            <h3>Erklärung der Kostenberechnung:</h3>
-            <p>Für jede Franchise werden die Kosten wie folgt berechnet:</p>
-            <ol>
-                <li>Jahresprämie: Die monatliche Prämie wird mit 12 multipliziert.</li>
-                <li>Franchise: Der volle Franchisebetrag wird bezahlt, wenn die Gesundheitskosten die Franchise übersteigen.</li>
-                <li>Selbstbehalt: 10% der Kosten über der Franchise, maximal 700 CHF.</li>
-                <li>Versicherungsleistung: 100% der Kosten über Franchise und Selbstbehalt.</li>
-            </ol>
-            <p>Die Gesamtkosten setzen sich aus Jahresprämie, bezahlter Franchise, Selbstbehalt und eventuellen zusätzlichen Gesundheitskosten zusammen.</p>
-            <p>Bei der 3-Jahres-Berechnung werden die Prämien jedes Jahr um 5% erhöht, und die Gesundheitskosten können für jedes Jahr individuell festgelegt werden.</p>
-        </div>
-    </div>
+    <!-- ... (keep the existing content for results and explanations) ... -->
 
     <script>
         let chart;
@@ -172,125 +91,70 @@
             threeYearInputs.style.display = document.getElementById('threeYearCheckbox').checked ? 'block' : 'none';
         }
 
-        // ... (keep the existing calculate and calculateCost functions) ...
-
-        function calculateThreeYears() {
+        function calculate() {
             const premium300 = parseFloat(document.getElementById('premium300').value) * 12;
             const premium1000 = parseFloat(document.getElementById('premium1000').value) * 12;
             const premium2500 = parseFloat(document.getElementById('premium2500').value) * 12;
-            const healthCostsYear1 = parseFloat(document.getElementById('healthCostsYear1').value);
-            const healthCostsYear2 = parseFloat(document.getElementById('healthCostsYear2').value);
-            const healthCostsYear3 = parseFloat(document.getElementById('healthCostsYear3').value);
-        
-            const costs300 = [
-                calculateCost(300, premium300, healthCostsYear1),
-                calculateCost(300, premium300 * 1.05, healthCostsYear2),
-                calculateCost(300, premium300 * 1.1025, healthCostsYear3)
-            ];
-        
-            const costs1000 = [
-                calculateCost(1000, premium1000, healthCostsYear1),
-                calculateCost(1000, premium1000 * 1.05, healthCostsYear2),
-                calculateCost(1000, premium1000 * 1.1025, healthCostsYear3)
-            ];
-        
-            const costs2500 = [
-                calculateCost(2500, premium2500, healthCostsYear1),
-                calculateCost(2500, premium2500 * 1.05, healthCostsYear2),
-                calculateCost(2500, premium2500 * 1.1025, healthCostsYear3)
-            ];
-        
-            updateThreeYearChart(costs300, costs1000, costs2500);
-        
+            const healthCosts = parseFloat(document.getElementById('healthCosts').value);
+
+            const costs300 = calculateCost(300, premium300, healthCosts);
+            const costs1000 = calculateCost(1000, premium1000, healthCosts);
+            const costs2500 = calculateCost(2500, premium2500, healthCosts);
+
+            updateChart(costs300, costs1000, costs2500);
+
             document.getElementById('results').style.display = 'block';
-            document.getElementById('threeYearChart').style.display = 'block';
-            document.getElementById('chart').style.display = 'none';
+            document.getElementById('chart').style.display = 'block';
+            document.getElementById('threeYearChart').style.display = 'none';
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function updateThreeYearChart(costs300, costs1000, costs2500) {
-            const ctx = document.getElementById('threeYearCostChart').getContext('2d');
-        
-            if (threeYearChart) {
-                threeYearChart.destroy();
+        function calculateCost(franchise, premium, healthCosts) {
+            const paidFranchise = Math.min(franchise, healthCosts);
+            const remainingCosts = Math.max(0, healthCosts - franchise);
+            const selfPayment = Math.min(700, remainingCosts * 0.1);
+            const insuranceCoverage = Math.max(0, remainingCosts - selfPayment);
+
+            return {
+                premium: premium,
+                paidFranchise: paidFranchise,
+                selfPayment: selfPayment,
+                insuranceCoverage: insuranceCoverage,
+                totalCost: premium + paidFranchise + selfPayment
+            };
+        }
+
+        function updateChart(costs300, costs1000, costs2500) {
+            const ctx = document.getElementById('costChart').getContext('2d');
+
+            if (chart) {
+                chart.destroy();
             }
-        
-            threeYearChart = new Chart(ctx, {
+
+            chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Franchise 300 CHF', 'Franchise 1000 CHF', 'Franchise 2500 CHF'],
                     datasets: [
                         {
-                            label: 'Jahr 1 - Prämie',
-                            data: [costs300[0].premium, costs1000[0].premium, costs2500[0].premium],
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            stack: 'Jahr 1'
+                            label: 'Prämie',
+                            data: [costs300.premium, costs1000.premium, costs2500.premium],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)'
                         },
                         {
-                            label: 'Jahr 1 - Franchise',
-                            data: [costs300[0].paidFranchise, costs1000[0].paidFranchise, costs2500[0].paidFranchise],
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            stack: 'Jahr 1'
+                            label: 'Franchise',
+                            data: [costs300.paidFranchise, costs1000.paidFranchise, costs2500.paidFranchise],
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)'
                         },
                         {
-                            label: 'Jahr 1 - Selbstbehalt',
-                            data: [costs300[0].selfPayment, costs1000[0].selfPayment, costs2500[0].selfPayment],
-                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                            stack: 'Jahr 1'
+                            label: 'Selbstbehalt',
+                            data: [costs300.selfPayment, costs1000.selfPayment, costs2500.selfPayment],
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)'
                         },
                         {
-                            label: 'Jahr 1 - Versicherungsleistung',
-                            data: [costs300[0].insuranceCoverage, costs1000[0].insuranceCoverage, costs2500[0].insuranceCoverage],
-                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                            stack: 'Jahr 1 Versicherung'
-                        },
-                        {
-                            label: 'Jahr 2 - Prämie',
-                            data: [costs300[1].premium, costs1000[1].premium, costs2500[1].premium],
-                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                            stack: 'Jahr 2'
-                        },
-                        {
-                            label: 'Jahr 2 - Franchise',
-                            data: [costs300[1].paidFranchise, costs1000[1].paidFranchise, costs2500[1].paidFranchise],
-                            backgroundColor: 'rgba(255, 205, 86, 0.5)',
-                            stack: 'Jahr 2'
-                        },
-                        {
-                            label: 'Jahr 2 - Selbstbehalt',
-                            data: [costs300[1].selfPayment, costs1000[1].selfPayment, costs2500[1].selfPayment],
-                            backgroundColor: 'rgba(201, 203, 207, 0.5)',
-                            stack: 'Jahr 2'
-                        },
-                        {
-                            label: 'Jahr 2 - Versicherungsleistung',
-                            data: [costs300[1].insuranceCoverage, costs1000[1].insuranceCoverage, costs2500[1].insuranceCoverage],
-                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                            stack: 'Jahr 2 Versicherung'
-                        },
-                        {
-                            label: 'Jahr 3 - Prämie',
-                            data: [costs300[2].premium, costs1000[2].premium, costs2500[2].premium],
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            stack: 'Jahr 3'
-                        },
-                        {
-                            label: 'Jahr 3 - Franchise',
-                            data: [costs300[2].paidFranchise, costs1000[2].paidFranchise, costs2500[2].paidFranchise],
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                            stack: 'Jahr 3'
-                        },
-                        {
-                            label: 'Jahr 3 - Selbstbehalt',
-                            data: [costs300[2].selfPayment, costs1000[2].selfPayment, costs2500[2].selfPayment],
-                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                            stack: 'Jahr 3'
-                        },
-                        {
-                            label: 'Jahr 3 - Versicherungsleistung',
-                            data: [costs300[2].insuranceCoverage, costs1000[2].insuranceCoverage, costs2500[2].insuranceCoverage],
-                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                            stack: 'Jahr 3 Versicherung'
+                            label: 'Versicherungsleistung',
+                            data: [costs300.insuranceCoverage, costs1000.insuranceCoverage, costs2500.insuranceCoverage],
+                            backgroundColor: 'rgba(153, 102, 255, 0.5)'
                         }
                     ]
                 },
@@ -328,7 +192,9 @@
                 }
             });
         }
+
+        // ... (keep the existing calculateThreeYears and updateThreeYearChart functions) ...
+
     </script>
 </body>
-</html>
 </html>
