@@ -121,9 +121,10 @@
     <div id="threeYearChart" style="display: none;">
         <canvas id="threeYearCostChart"></canvas>
     </div>
-
-    <div id="threeYearSummary"></div>
-
+    
+    <div id="threeYearSummary">
+    </div>
+    
     <div id="results" style="display: none;">
         <div class="instructions">
             <h2>Interpretation der Ergebnisse</h2>
@@ -314,7 +315,7 @@
 
             document.getElementById('results').style.display = 'block';
             document.getElementById('threeYearChart').style.display = 'block';
-            document.getElementById('threeYearSummary').style.display = 'block';
+            document.getElementById('threeYearSummary').style.display = 'block'; // Add this line
             document.getElementById('chart').style.display = 'none';
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
