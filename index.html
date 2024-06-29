@@ -16,7 +16,7 @@
             margin: 5px 0;
             padding: 5px;
         }
-        #chart {
+        #chart, #threeYearChart {
             margin-top: 20px;
             height: 300px;
         }
@@ -40,6 +40,9 @@
         .instructions strong {
             color: #0066cc;
         }
+        #threeYearInputs {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -61,7 +64,11 @@
             <li>
                 <strong>Berechnung starten:</strong>
                 <p>Klicken Sie auf den "Berechnen" Button, um die Analyse zu starten.</p>
-            </li>        
+            </li>
+            <li>
+                <strong>3-Jahres-Berechnung (optional):</strong>
+                <p>Klicken Sie auf "3-Jahres-Berechnung aktivieren", um die Kosten über drei Jahre zu berechnen. Geben Sie die erwarteten Gesundheitskosten für jedes Jahr ein und klicken Sie auf "3-Jahres-Berechnung".</p>
+            </li>
         </ol>
         <p><em>Bitte beachten Sie: Diese Berechnung dient als Orientierungshilfe und ersetzt keine individuelle Beratung. Die tatsächlichen Kosten können je nach spezifischer Situation und Versicherungsvertrag variieren.</em></p>
     </div>
@@ -82,8 +89,28 @@
     
     <button onclick="calculate()">Berechnen</button>
     
+    <button onclick="toggleThreeYearInputs()">3-Jahres-Berechnung aktivieren</button>
+    
+    <div id="threeYearInputs">
+        <h3>3-Jahres-Berechnung</h3>
+        <label for="healthCostsYear1">Gesundheitskosten Jahr 1:</label>
+        <input type="number" id="healthCostsYear1" placeholder="Kosten in CHF"><br>
+        
+        <label for="healthCostsYear2">Gesundheitskosten Jahr 2:</label>
+        <input type="number" id="healthCostsYear2" placeholder="Kosten in CHF"><br>
+        
+        <label for="healthCostsYear3">Gesundheitskosten Jahr 3:</label>
+        <input type="number" id="healthCostsYear3" placeholder="Kosten in CHF"><br>
+        
+        <button onclick="calculateThreeYears()">3-Jahres-Berechnung</button>
+    </div>
+    
     <div id="chart">
         <canvas id="costChart"></canvas>
+    </div>
+
+    <div id="threeYearChart" style="display: none;">
+        <canvas id="threeYearCostChart"></canvas>
     </div>
 
     <div id="results" style="display: none;">
@@ -108,6 +135,10 @@
                     <strong>Verschiedene Szenarien testen:</strong>
                     <p>Probieren Sie verschiedene Werte für die jährlichen Gesundheitskosten aus, um zu sehen, wie sich die Gesamtkosten bei unterschiedlichen Gesundheitsausgaben verhalten.</p>
                 </li>
+                <li>
+                    <strong>3-Jahres-Berechnung analysieren:</strong>
+                    <p>Bei der 3-Jahres-Berechnung sehen Sie die Kosten für jedes Jahr gestapelt. Beachten Sie, dass die Prämien jährlich um 5% steigen. Vergleichen Sie die Gesamtkosten über drei Jahre, um eine langfristige Perspektive zu erhalten.</p>
+                </li>
             </ol>
         </div>
 
@@ -121,11 +152,18 @@
                 <li>Versicherungsleistung: 100% der Kosten über Franchise und Selbstbehalt.</li>
             </ol>
             <p>Die Gesamtkosten setzen sich aus Jahresprämie, bezahlter Franchise, Selbstbehalt und eventuellen zusätzlichen Gesundheitskosten zusammen.</p>
+            <p>Bei der 3-Jahres-Berechnung werden die Prämien jedes Jahr um 5% erhöht, und die Gesundheitskosten können für jedes Jahr individuell festgelegt werden.</p>
         </div>
     </div>
 
     <script>
         let chart;
+        let threeYearChart;
+
+        function toggleThreeYearInputs() {
+            const threeYearInputs = document.getElementById('threeYearInputs');
+            threeYearInputs.style.display = threeYearInputs.style.display === 'none' ? 'block' : 'none';
+        }
 
         function calculate() {
             const premium300 = parseFloat(document.getElementById('premium300').value) * 12;
@@ -139,10 +177,7 @@
 
             updateChart(cost300, cost1000, cost2500);
 
-            // Show the results
             document.getElementById('results').style.display = 'block';
-
-            // Scroll smoothly to the results area
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -157,7 +192,7 @@
                 paidFranchise: paidFranchise,
                 selfPayment: selfPayment,
                 insuranceCoverage: insuranceCoverage,
-                total: premium + paidFranchise + selfPayment + insuranceCoverage
+                total: premium + paidFranchise + selfPayment
             };
         }
 
@@ -209,7 +244,113 @@
                     scales: {
                         y: {
                             stacked: true,
-                            min: 2000,
+                            title: {
+                                display: true,
+                                text: 'Kosten (CHF)'
+                            },
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    return value.toLocaleString('de-CH') + ' CHF';
+                                }
+                            }
+                        },
+                        x: {
+                            stacked: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.parsed.y || 0;
+                                    return `${label}: ${value.toLocaleString('de-CH')} CHF`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function calculateThreeYears() {
+            const premium300 = parseFloat(document.getElementById('premium300').value) * 12;
+            const premium1000 = parseFloat(document.getElementById('premium1000').value) * 12;
+            const premium2500 = parseFloat(document.getElementById('premium2500').value) * 12;
+            const healthCostsYear1 = parseFloat(document.getElementById('healthCostsYear1').value);
+            const healthCostsYear2 = parseFloat(document.getElementById('healthCostsYear2').value);
+            const healthCostsYear3 = parseFloat(document.getElementById('healthCostsYear3').value);
+
+            const costs300 = [
+                calculateCost(300, premium300, healthCostsYear1),
+                calculateCost(300, premium300 * 1.05, healthCostsYear2),
+                const costs300 = [
+                calculateCost(300, premium300, healthCostsYear1),
+                calculateCost(300, premium300 * 1.05, healthCostsYear2),
+                calculateCost(300, premium300 * 1.1025, healthCostsYear3)
+            ];
+
+            const costs1000 = [
+                calculateCost(1000, premium1000, healthCostsYear1),
+                calculateCost(1000, premium1000 * 1.05, healthCostsYear2),
+                calculateCost(1000, premium1000 * 1.1025, healthCostsYear3)
+            ];
+
+            const costs2500 = [
+                calculateCost(2500, premium2500, healthCostsYear1),
+                calculateCost(2500, premium2500 * 1.05, healthCostsYear2),
+                calculateCost(2500, premium2500 * 1.1025, healthCostsYear3)
+            ];
+
+            updateThreeYearChart(costs300, costs1000, costs2500);
+
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('threeYearChart').style.display = 'block';
+            document.getElementById('chart').style.display = 'none';
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateThreeYearChart(costs300, costs1000, costs2500) {
+            const ctx = document.getElementById('threeYearCostChart').getContext('2d');
+        
+            if (threeYearChart) {
+                threeYearChart.destroy();
+            }
+        
+            threeYearChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Franchise 300 CHF', 'Franchise 1000 CHF', 'Franchise 2500 CHF'],
+                    datasets: [
+                        {
+                            label: 'Jahr 1',
+                            data: [costs300[0].total, costs1000[0].total, costs2500[0].total],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Jahr 2',
+                            data: [costs300[1].total, costs1000[1].total, costs2500[1].total],
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Jahr 3',
+                            data: [costs300[2].total, costs1000[2].total, costs2500[2].total],
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            stacked: true,
                             title: {
                                 display: true,
                                 text: 'Kosten (CHF)'
