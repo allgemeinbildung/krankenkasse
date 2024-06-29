@@ -168,10 +168,16 @@
         </div>
     </div>
 
-    <script>
+    <script>        
         let chart;
         let threeYearChart;
 
+        const colorScheme = {
+            premium: 'rgba(255, 99, 132, 0.5)',  // Red
+            franchise: 'rgba(54, 162, 235, 0.5)', // Blue
+            selfPayment: 'rgba(75, 192, 192, 0.5)' // Green
+        };
+        
         function toggleThreeYearInputs() {
             const threeYearInputs = document.getElementById('threeYearInputs');
             threeYearInputs.style.display = document.getElementById('threeYearCheckbox').checked ? 'block' : 'none';
@@ -320,7 +326,12 @@
             if (threeYearChart) {
                 threeYearChart.destroy();
             }
-                
+        
+            // Calculate total sums for each franchise option
+            const totalSum300 = costs300.reduce((sum, year) => sum + year.totalCost, 0);
+            const totalSum1000 = costs1000.reduce((sum, year) => sum + year.totalCost, 0);
+            const totalSum2500 = costs2500.reduce((sum, year) => sum + year.totalCost, 0);
+        
             threeYearChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -329,55 +340,55 @@
                         {
                             label: 'Jahr 1 - Prämie',
                             data: [costs300[0].premium, costs1000[0].premium, costs2500[0].premium],
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            backgroundColor: colorScheme.premium,
                             stack: 'Jahr 1'
                         },
                         {
                             label: 'Jahr 1 - Franchise',
                             data: [costs300[0].paidFranchise, costs1000[0].paidFranchise, costs2500[0].paidFranchise],
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            backgroundColor: colorScheme.franchise,
                             stack: 'Jahr 1'
                         },
                         {
                             label: 'Jahr 1 - Selbstbehalt',
                             data: [costs300[0].selfPayment, costs1000[0].selfPayment, costs2500[0].selfPayment],
-                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            backgroundColor: colorScheme.selfPayment,
                             stack: 'Jahr 1'
                         },
                         {
                             label: 'Jahr 2 - Prämie',
                             data: [costs300[1].premium, costs1000[1].premium, costs2500[1].premium],
-                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            backgroundColor: colorScheme.premium,
                             stack: 'Jahr 2'
                         },
                         {
                             label: 'Jahr 2 - Franchise',
                             data: [costs300[1].paidFranchise, costs1000[1].paidFranchise, costs2500[1].paidFranchise],
-                            backgroundColor: 'rgba(255, 205, 86, 0.5)',
+                            backgroundColor: colorScheme.franchise,
                             stack: 'Jahr 2'
                         },
                         {
                             label: 'Jahr 2 - Selbstbehalt',
                             data: [costs300[1].selfPayment, costs1000[1].selfPayment, costs2500[1].selfPayment],
-                            backgroundColor: 'rgba(201, 203, 207, 0.5)',
+                            backgroundColor: colorScheme.selfPayment,
                             stack: 'Jahr 2'
                         },
                         {
                             label: 'Jahr 3 - Prämie',
                             data: [costs300[2].premium, costs1000[2].premium, costs2500[2].premium],
-                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                            backgroundColor: colorScheme.premium,
                             stack: 'Jahr 3'
                         },
                         {
                             label: 'Jahr 3 - Franchise',
                             data: [costs300[2].paidFranchise, costs1000[2].paidFranchise, costs2500[2].paidFranchise],
-                            backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                            backgroundColor: colorScheme.franchise,
                             stack: 'Jahr 3'
                         },
                         {
                             label: 'Jahr 3 - Selbstbehalt',
                             data: [costs300[2].selfPayment, costs1000[2].selfPayment, costs2500[2].selfPayment],
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            backgroundColor: colorScheme.selfPayment,
                             stack: 'Jahr 3'
                         }
                     ]
@@ -416,11 +427,6 @@
                 }
             });
         
-            // Calculate total sums for each franchise option
-            const totalSum300 = costs300.reduce((sum, year) => sum + year.totalCost, 0);
-            const totalSum1000 = costs1000.reduce((sum, year) => sum + year.totalCost, 0);
-            const totalSum2500 = costs2500.reduce((sum, year) => sum + year.totalCost, 0);
-        
             // Update the summary in the dedicated div
             const summaryElement = document.getElementById('threeYearSummary');
             summaryElement.innerHTML = `
@@ -429,7 +435,9 @@
                 <p>Franchise 1000 CHF: ${totalSum1000.toLocaleString('de-CH')} CHF</p>
                 <p>Franchise 2500 CHF: ${totalSum2500.toLocaleString('de-CH')} CHF</p>
             `;
+            document.getElementById('threeYearChart').appendChild(summaryElement);
         }
+
     </script>
 </body>
 </html>
