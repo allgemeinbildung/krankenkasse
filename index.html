@@ -19,10 +19,18 @@
         #chart {
             margin-top: 20px;
         }
+        .explanation {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
     <h1>Schweizer Gesundheitskosten-Rechner</h1>
+    
+    <p>Die Kosten der Prämien können Sie unter <a href="https://www.priminfo.admin.ch/de/praemien" target="_blank">Prämienrechner 2024 – Priminfo (admin.ch)</a> finden.</p>
     
     <h2>Monatliche Prämien</h2>
     <label for="premium300">Prämie für Franchise 300 CHF:</label>
@@ -44,6 +52,18 @@
         <canvas id="costChart"></canvas>
     </div>
 
+    <div class="explanation">
+        <h3>Erklärung der Kostenberechnung:</h3>
+        <p>Für jede Franchise werden die Kosten wie folgt berechnet:</p>
+        <ol>
+            <li>Jahresprämie: Die monatliche Prämie wird mit 12 multipliziert.</li>
+            <li>Franchise: Der volle Franchisebetrag wird bezahlt, wenn die Gesundheitskosten die Franchise übersteigen.</li>
+            <li>Selbstbehalt: 10% der Kosten über der Franchise, maximal 700 CHF.</li>
+            <li>Versicherungsleistung: 100% der Kosten über Franchise und Selbstbehalt.</li>
+        </ol>
+        <p>Die Gesamtkosten setzen sich aus Jahresprämie, bezahlter Franchise, Selbstbehalt und eventuellen zusätzlichen Gesundheitskosten zusammen.</p>
+    </div>
+
     <script>
         let chart;
 
@@ -61,22 +81,18 @@
         }
 
         function calculateCost(franchise, premium, healthCosts) {
-            let cost = premium;
+            let paidFranchise = Math.min(franchise, healthCosts);
             let remainingCosts = Math.max(0, healthCosts - franchise);
-            
-            if (remainingCosts > 0) {
-                const selfPayment = Math.min(remainingCosts * 0.1, 700);
-                cost += franchise + selfPayment;
-                remainingCosts -= selfPayment * 10;
-                
-                if (remainingCosts > 0) {
-                    cost += remainingCosts;
-                }
-            } else {
-                cost += healthCosts;
-            }
+            let selfPayment = Math.min(remainingCosts * 0.1, 700);
+            let insuranceCoverage = Math.max(0, remainingCosts - selfPayment);
 
-            return cost;
+            return {
+                premium: premium,
+                paidFranchise: paidFranchise,
+                selfPayment: selfPayment,
+                insuranceCoverage: insuranceCoverage,
+                total: premium + paidFranchise + selfPayment + insuranceCoverage
+            };
         }
 
         function updateChart(cost300, cost1000, cost2500) {
@@ -90,37 +106,58 @@
                 type: 'bar',
                 data: {
                     labels: ['Franchise 300 CHF', 'Franchise 1000 CHF', 'Franchise 2500 CHF'],
-                    datasets: [{
-                        label: 'Gesamtkosten (CHF)',
-                        data: [cost300, cost1000, cost2500],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(75, 192, 192, 0.5)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(75, 192, 192, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+                    datasets: [
+                        {
+                            label: 'Prämien',
+                            data: [cost300.premium, cost1000.premium, cost2500.premium],
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Franchise',
+                            data: [cost300.paidFranchise, cost1000.paidFranchise, cost2500.paidFranchise],
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Selbstbehalt',
+                            data: [cost300.selfPayment, cost1000.selfPayment, cost2500.selfPayment],
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Versicherungsleistung',
+                            data: [cost300.insuranceCoverage, cost1000.insuranceCoverage, cost2500.insuranceCoverage],
+                            backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        }
+                    ]
                 },
                 options: {
                     scales: {
                         y: {
                             beginAtZero: true,
+                            stacked: true,
                             title: {
                                 display: true,
-                                text: 'Gesamtkosten (CHF)'
+                                text: 'Kosten (CHF)'
                             }
+                        },
+                        x: {
+                            stacked: true
                         }
                     },
                     plugins: {
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return `Gesamtkosten: ${context.parsed.y.toFixed(2)} CHF`;
+                                    const label = context.dataset.label || '';
+                                    const value = context.parsed.y || 0;
+                                    return `${label}: ${value.toFixed(2)} CHF`;
                                 }
                             }
                         }
