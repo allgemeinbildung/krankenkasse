@@ -314,13 +314,6 @@
                 threeYearChart.destroy();
             }
         
-            // Calculate total costs for each franchise
-            const totalCost300 = costs300.reduce((sum, year) => sum + year.totalCost, 0);
-            const totalCost1000 = costs1000.reduce((sum, year) => sum + year.totalCost, 0);
-            const totalCost2500 = costs2500.reduce((sum, year) => sum + year.totalCost, 0);
-
-
-        
             threeYearChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -398,21 +391,6 @@
                             backgroundColor: 'rgba(153, 102, 255, 0.5)',
                             stack: 'Jahr 3 Versicherung'
                         }
-                        {
-                            label: 'Jahr 1 - Gesamtkosten',
-                            data: [costs300[0].totalCost, costs1000[0].totalCost, costs2500[0].totalCost],
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        },
-                        {
-                            label: 'Jahr 2 - Gesamtkosten',
-                            data: [costs300[1].totalCost, costs1000[1].totalCost, costs2500[1].totalCost],
-                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        },
-                        {
-                            label: 'Jahr 3 - Gesamtkosten',
-                            data: [costs300[2].totalCost, costs1000[2].totalCost, costs2500[2].totalCost],
-                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                        }                        
                     ]
                 },
                 options: {
@@ -442,11 +420,6 @@
                                     const label = context.dataset.label || '';
                                     const value = context.parsed.y || 0;
                                     return `${label}: ${value.toLocaleString('de-CH')} CHF`;
-                                },
-                                footer: function(tooltipItems) {
-                                    const franchiseIndex = tooltipItems[0].dataIndex;
-                                    const totalCosts = [totalCost300, totalCost1000, totalCost2500];
-                                    return `Gesamtkosten über 3 Jahre: ${totalCosts[franchiseIndex].toLocaleString('de-CH')} CHF`;
                                 }
                             }
                         }
