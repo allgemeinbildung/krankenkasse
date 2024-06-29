@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schweizer Gesundheitskosten-Rechner</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input, button {
+            margin: 5px 0;
+            padding: 5px;
+        }
+        #chart {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schweizer Gesundheitskosten-Rechner</h1>
+    
+    <h2>Monatliche Prämien</h2>
+    <label for="premium300">Prämie für Franchise 300 CHF:</label>
+    <input type="number" id="premium300" placeholder="Prämie in CHF"><br>
+    
+    <label for="premium1000">Prämie für Franchise 1000 CHF:</label>
+    <input type="number" id="premium1000" placeholder="Prämie in CHF"><br>
+    
+    <label for="premium2500">Prämie für Franchise 2500 CHF:</label>
+    <input type="number" id="premium2500" placeholder="Prämie in CHF"><br>
+    
+    <h2>Gesundheitskosten</h2>
+    <label for="healthCosts">Jährliche Gesundheitskosten:</label>
+    <input type="number" id="healthCosts" placeholder="Kosten in CHF">
+    
+    <button onclick="calculate()">Berechnen</button>
+    
+    <div id="chart">
+        <canvas id="costChart"></canvas>
+    </div>
+
+    <script>
+        let chart;
+
+        function calculate() {
+            const premium300 = parseFloat(document.getElementById('premium300').value) * 12;
+            const premium1000 = parseFloat(document.getElementById('premium1000').value) * 12;
+            const premium2500 = parseFloat(document.getElementById('premium2500').value) * 12;
+            const healthCosts = parseFloat(document.getElementById('healthCosts').value);
+
+            const cost300 = calculateCost(300, premium300, healthCosts);
+            const cost1000 = calculateCost(1000, premium1000, healthCosts);
+            const cost2500 = calculateCost(2500, premium2500, healthCosts);
+
+            updateChart(cost300, cost1000, cost2500);
+        }
+
+        function calculateCost(franchise, premium, healthCosts) {
+            let cost = premium;
+            let remainingCosts = Math.max(0, healthCosts - franchise);
+            
+            if (remainingCosts > 0) {
+                const selfPayment = Math.min(remainingCosts * 0.1, 700);
+                cost += franchise + selfPayment;
+                remainingCosts -= selfPayment * 10;
+                
+                if (remainingCosts > 0) {
+                    cost += remainingCosts;
+                }
+            } else {
+                cost += healthCosts;
+            }
+
+            return cost;
+        }
+
+        function updateChart(cost300, cost1000, cost2500) {
+            const ctx = document.getElementById('costChart').getContext('2d');
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Franchise 300 CHF', 'Franchise 1000 CHF', 'Franchise 2500 CHF'],
+                    datasets: [{
+                        label: 'Gesamtkosten (CHF)',
+                        data: [cost300, cost1000, cost2500],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(75, 192, 192, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Gesamtkosten (CHF)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Gesamtkosten: ${context.parsed.y.toFixed(2)} CHF`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
